@@ -1,0 +1,86 @@
+*{
+/*    border: solid 1px red;*/
+    margin: 0px;
+    padding: 0px;
+}
+
+html,body{
+/*    position: absolute;*/
+/*    width: 100%;*/
+    height: 100%;
+    /* background-color: red; */
+}
+.leftContainer, .rightContainer{
+    z-index: 1;
+}
+
+
+.leftContainer{
+    background-color: blue;
+    /* position:  relative; */
+    height: 100%;
+    min-width: 250PX;
+    width: 20%;
+    max-width: 300px;
+    float: left;
+}
+
+.addressBox{
+     /* position: absolute; */
+     /* display: inline-block; */
+     /* width: 100%; */
+     height: 20%;
+     /* border: 1px solid brown; */
+     min-height: 181px;
+}
+
+#addressTextField{
+    display: block;
+    width: 90%;
+    height: 42px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    border-radius: 8px;
+}
+
+.dropdown{
+      border: solid purple 2px;
+    height: 25%;
+    width: 79.5%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 34px;
+    border-radius: 7px;
+    
+}
+
+.googleDirectionsBox{
+       height: 72.2%;
+       width: 100%;
+       background-color:  orange;
+}
+#mapContainer{
+      height: 100%;
+    position: absolute;
+    width: 100%;
+    background-color: beige;
+    display: inline;
+    z-index: -1;
+}
+
+
+.rightContainer{
+    /* border: solid brown 2px; */
+    height: 99px;
+    background-color: aquamarine;
+}
+
+/*
+.nameplate{
+    position: absolute;
+    bottom: 0px;
+    border: solid purple 2px;
+}
+*/
+

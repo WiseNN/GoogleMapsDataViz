@@ -1,5 +1,11 @@
-       var map, infoWindow, defaultCoords;
+       var map, panoStreetView, infoWindow, defaultCoords, fusionLayer;
        var markers = [];
+
+        //google directions variabls
+        var directionsDisplay, directionsService;
+        
+        //sample data, timer id
+        var timerID;
 
       
     
@@ -7,16 +13,104 @@
           
           
           
-          
       
-
         
+      function createGoogleStreetView(forPos)
+      {
+          panoStreetView = new google.maps.StreetViewPanorama(
+          document.getElementById('streetViewContainer'),{
+              position: forPos,
+              pov: {
+                  heading: 34,
+                  pitch: 10
+              }
+          });
+          
+          map.setStreetView(panoStreetView);
+      }
+
+        function retrieveRoute(startLoc, endLoc)
+        {
+            
+
+            var request = {
+                origin: startLoc,
+                destination: endLoc,
+                avoidHighways: false,
+                avoidTolls: false, 
+                provideRouteAlternatives: false,
+                travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.IMPERIAL,
+                region: 'us'
+            };
+
+            //Ask Google Directions Service to send a route back to us.
+            directionsService.route(request, function(response, status){
+
+                if(status == google.maps.DirectionsStatus.OK)
+                {
+                    //Now the route is drawn on the map
+                    directionsDisplay.setDirections(response);
+                }
+            });
+
+            window.clearTimeout(timerID);
+        }
+
+
+       
+    
+      function delayedCall()
+      {
+          timerID = window.setTimeout(function(){
+              retrieveRoute("Charlotte, NC", "Fort Lauderdale, FL");
+              createGoogleStreetView({lat: 33.754711, lng: -84.388068});
+              
+          }, 0000);
+          
+      }
+
+    function createFusionTableLayer()
+    {
+        //fusion table layer
+              var fusionLayer = new google.maps.FusionTablesLayer({
+                  query: {
+                    select: 'Type',
+                    from: '1FjVvT2lxm_meECyU7Mn1TaZOvvwu3rJnpZztPqvr',
+    //                where: 'ridership > 5000'
+                  }
+                });
+                fusionLayer.setMap(map);
+        
+        google.maps.event.addListener(fusionLayer,'click', function(event){
+//            alert("lat: "+event.latLng.lat()+" long: "+event.latLng.lng());
+            if(markers.length > 0)
+            {
+                //get start location from address search field
+                let startLoc = markers[0].position;
+
+                //get end location from the map pin
+                let endLoc = {
+                              lat: event.latLng.lat(),
+                              lng: event.latLng.lng() 
+                             };
+
+                retrieveRoute(startLoc,endLoc);
+                createGoogleStreetView(endLoc);
+            }
+            
+            
+            
+        });
+        
+    }
+
       function initMap() 
       {
           
           //get window location...
           if(navigator.geolocation)
-      {
+          {
           //informational window
           infoWindow = new google.maps.InfoWindow;
           
@@ -52,17 +146,10 @@
             mapTypeId: 'roadmap'
         });
           
-          //fusion table layer
-          var layer = new google.maps.FusionTablesLayer({
-              query: {
-                select: 'Type',
-                from: '1FjVvT2lxm_meECyU7Mn1TaZOvvwu3rJnpZztPqvr',
-//                where: 'ridership > 5000'
-              }
-            });
-            layer.setMap(map);
+          //adding data points to map from google fusion table
+          createFusionTableLayer();
       
-      // Create the search box and link it to the UI element.
+        // Create the search box and link it to the UI element.
         var input = document.getElementById('addressTextField');
         var searchBox = new google.maps.places.SearchBox(input);
 //        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -114,6 +201,7 @@
               title: place.name,
               position: place.geometry.location
             }));
+              
 
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
@@ -125,9 +213,23 @@
           map.fitBounds(bounds);
 //            map.setCenter(place.geometry.location);
         });
+          
+          
+          
+          //Google Directions API
+          directionsService = new google.maps.DirectionsService();
+          directionsDisplay = new google.maps.DirectionsRenderer();
+          
+          //associate directions renderer with map
+          directionsDisplay.setMap(map);
+          var directionsPanel = document.getElementById('googleDirectionsBox');
+          directionsDisplay.setPanel(directionsPanel);
          
+        delayedCall();
       
       }
+    
+
 
 
 

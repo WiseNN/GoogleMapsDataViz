@@ -66,7 +66,7 @@
               retrieveRoute("Charlotte, NC", "Fort Lauderdale, FL");
               createGoogleStreetView({lat: 33.754711, lng: -84.388068});
               
-          }, 0000);
+          }, 1000);
           
       }
 

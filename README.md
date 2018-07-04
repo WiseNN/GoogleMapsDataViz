@@ -4,7 +4,7 @@ A Data Visualization Project utilizing the Google APIs. Google Fusion Table, Goo
 
 
 
-![Run Screenshot](https://raw.githubusercontent.com/WiseNN/GoogleMapsDataViz/containerOverlay/public/img/imgData.png)
+![Run Screenshot](https://raw.githubusercontent.com/WiseNN/GoogleMapsDataViz/containerOverlay/public/img/imgData2.png)
 
 <h4>Run Instructions:</h4>
 

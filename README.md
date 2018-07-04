@@ -1,4 +1,4 @@
-# GoogleMapsDataViz
+# GoogleMaps DataViz
 A Data Visualization Project utilizing the Google APIs. Google Fusion Table, Google Places, Google Directions & Google StreetView
 
 

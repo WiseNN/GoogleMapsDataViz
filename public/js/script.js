@@ -140,10 +140,43 @@
           
           //init map...
           debugger;
+          
         map = new google.maps.Map(document.getElementById('mapContainer'), {
-          center: defaultCoords,
-          zoom: 13,
-            mapTypeId: 'roadmap'
+            
+            center: defaultCoords,
+            zoom: 13,
+            mapTypeId: 'roadmap',
+            mapTypeControl: true,
+
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                position: google.maps.ControlPosition.RIGHT_BOTTOM,
+                mapTypeIds: ['roadmap', 'terrain','satellite','hybrid']
+                
+
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+            },
+            scaleControl: true,
+            scaleControlOoptions:{
+                position: google.maps.ControlPosition.BOTTOM_CENTER
+            },
+            streetViewControl: false,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.BOTTOM_CENTER
+            },
+            fullscreenControl: true,
+            rotateControl: true,
+            rotateControlOptions: {
+                position: google.maps.ControlPosition.BOTTOM_CENTER
+            },
+
+
+
+
         });
           
           //adding data points to map from google fusion table
